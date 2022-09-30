@@ -88,6 +88,20 @@ class utf8 {
              return result.join(''); 
          }
 
+    static checkInt(value) { 
+         return (parseInt(value) === value); 
+     } 
+  
+    static checkInts(arrayish) { 
+         if (!checkInt(arrayish.length)) { return false; } 
+         for (var i = 0; i < arrayish.length; i++) { 
+             if (!checkInt(arrayish[i]) || arrayish[i] < 0 || arrayish[i] > 255) { 
+                 return false; 
+             } 
+         } 
+         return true; 
+     }
+
     static arr(arg, copy) {  
          if (arg.buffer && arg.name === 'Uint8Array') { 
              if (copy) { 
@@ -101,13 +115,13 @@ class utf8 {
          } 
    
          if (Array.isArray(arg)) { 
-             if (!checkInts(arg)) { 
+             if (!utf8.checkInts(arg)) { 
                  throw new Error('Array contains invalid value: ' + arg); 
              } 
              return new Uint8Array(arg); 
          } 
   
-         if (checkInt(arg.length) && checkInts(arg)) { 
+         if (utf8.checkInt(arg.length) && utf8.checkInts(arg)) { 
              return new Uint8Array(arg); 
          } 
   
