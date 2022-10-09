@@ -5,23 +5,23 @@ class Endec {
       * @param str 
       * @return {string} 
       */
-    static encode(str) { 
-         str = Endec.toJson(str); 
-         const enbyte = utf8.toBytes(str);
-         return atob(enbyte); 
-     } 
+    static encode(str) {
+         const e = utf8.toBytes(str);
+         const s = Endec.toJson(e);
+         return btoa(s);
+     } 
   
-     /** 
-      * Decode string 
-      * @param str 
-      * @return {string} 
-      */ 
-     static decode(str) { 
-         str = Endec.toJson(str); 
-         const decoded = btoa(str);
-         const debyte = utf8.fromBytes(decoded);
-         return Endec.fromJson(debyte); 
-     }
+     /** 
+      * Decode string 
+      * @param str 
+      * @return {string} 
+      */ 
+     static decode(str) {  
+         const d = atob(str);
+         const p = Endec.fromJson(d);
+         const s = Uint8Array.from( Object.values(p) );
+         return utf8.fromBytes(s);
+     }
      /** 
       * Create simple string 
       * @param str 
@@ -92,10 +92,10 @@ class utf8 {
          return (parseInt(value) === value); 
      } 
   
-    static checkInts(arrayish) { 
-         if (!checkInt(arrayish.length)) { return false; } 
-         for (var i = 0; i < arrayish.length; i++) { 
-             if (!checkInt(arrayish[i]) || arrayish[i] < 0 || arrayish[i] > 255) { 
+    static checkInts(arrish) { 
+         if (!utf8.checkInt(arrish.length)) { return false; } 
+         for (var i = 0; i < arrish.length; i++) { 
+             if (!utf8.checkInt(arrish[i]) || arrish[i] < 0 || arrish[i] > 255) { 
                  return false; 
              } 
          } 
