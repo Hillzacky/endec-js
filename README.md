@@ -27,3 +27,12 @@ const script = {
 
 script.add('https://cdn.jsdelivr.net/gh/Hillzacky/endec-js@latest/endec.js')
 ```
+### Use
+```
+const str = `ABCDEF12345abcdef`,
+encode = Endec.encode(str);
+console.log(encode)
+
+const decode = Endec.decode(encode)
+console.log(decode)
+```
